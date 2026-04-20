@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Admin - Login</h2>
+<form method="post" action="{{ url_for('admin_feedback') }}">
+  <label>Admin password</label>
+  <input name="pwd" type="password" required>
+  <div class="form-actions">
+    <button class="btn primary" type="submit">Login</button>
+  </div>
+  {% if error %}
+    <div class="flash warning">Invalid password</div>
+  {% endif %}
+</form>
+{% endblock %}

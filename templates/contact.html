@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>📬 Contact & Feedback</h2>
+<p class="muted">Your feedback helps improve the model and user experience.</p>
+
+<div class="card form-card">
+  <form method="post" action="{{ url_for('contact') }}">
+    <label>Your Name</label>
+    <input name="name" type="text" required>
+
+    <label>Email</label>
+    <input name="email" type="email" required>
+
+    <label>Message</label>
+    <textarea name="message" rows="5" required></textarea>
+
+    <div class="form-actions">
+      <button class="btn primary" type="submit">Submit Feedback</button>
+    </div>
+  </form>
+</div>
+
+<div class="contact-details card">
+  <h5>Contact</h5>
+  <p>Email: anushkakhatua15@gmail.com</p>
+  <p>Anushka Khatua (M.Tech in AI & DS)<p>
+  <p> School of Computer Engineering
+  <p>KIIT University, Bhubaneswar</p>
+</div>
+{% endblock %}

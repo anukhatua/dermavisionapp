@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="page-title">
+  <h2>🔍 Skin Disease Detection</h2>
+  <p class="muted">Upload a close-up image. The system provides guidance — not a final diagnosis.</p>
+</div>
+
+<div class="card form-card spacious">
+  <form method="post" enctype="multipart/form-data" onsubmit="showScanner()">
+    <div class="row detection-row">
+      <div class="col-left detection-left">
+        <label>Age</label>
+        <input name="age" type="number" min="1" max="120" required>
+
+        <label>Sex</label>
+        <select name="sex">
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+
+        <label>Existing Medical Conditions (optional)</label>
+        <textarea name="medical_history" rows="2" placeholder="E.g. diabetes, eczema, etc."></textarea>
+
+        <label>Upload Skin Image</label>
+        <input name="image" type="file" accept="image/*" required>
+
+        <div class="form-actions">
+          <button class="btn primary" type="submit">Analyze 🔎</button>
+          <a class="btn ghost" href="{{ url_for('insights') }}">Learn More</a>
+        </div>
+      </div>
+
+      <div class="col-right detection-right">
+        <div class="preview-panel">
+          {% if uploaded_image %}
+            <img src="{{ uploaded_image }}" class="preview-img" alt="uploaded">
+          {% else %}
+            <div class="preview-placeholder">
+              <div class="placeholder-icon">🖼️</div>
+              <div class="placeholder-text">Preview will appear here</div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- scanner overlay -->
+<div id="scanner-overlay" style="display:none;">
+  <div class="scanner-box">
+    <div class="scanner-bar"></div>
+    <div class="scanner-text">Scanning image — please wait...</div>
+  </div>
+</div>
+
+{% if result %}
+<div class="card result-card spacious">
+  <div class="result-header">
+    <div>
+      <h3>Result: <span class="accent">{{ result.predicted_class }}</span></h3>
+      <div class="confidence">Confidence: <strong>{{ result.confidence }}%</strong></div>
+      <div class="severity">{{ result.severity_hint }}</div>
+    </div>
+    <div class="action-panel">
+      <a class="btn ghost" href="{{ result.uploaded_image }}" target="_blank">Open Image</a>
+      <a class="btn secondary" href="https://www.google.com/maps/search/dermatologist+near+me" target="_blank">Find Dermatologist</a>
+    </div>
+  </div>
+
+  <hr>
+
+  <h5>📝 What this means</h5>
+  <p>{{ result.description }}</p>
+
+  <h5>📋 General Guidelines</h5>
+  <ul>
+    {% for g in result.guidelines %}
+      <li>{{ g }}</li>
+    {% endfor %}
+  </ul>
+
+  <h5>🧠 Age-specific note</h5>
+  <p>{{ result.age_note }}</p>
+
+  <div class="result-actions">
+    <a class="btn primary" href="{{ uploaded_image }}" download>Download Image</a>
+    <button class="btn ghost" onclick="downloadJSON({{ result | tojson }})">Save Result (JSON)</button>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

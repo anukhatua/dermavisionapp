@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="hero no-image">
+  <div class="hero-left">
+    <h2>Welcome to <span class="accent">DermaVision</span></h2>
+    <p class="lead">
+      An AI-driven dermatology assistant that analyzes skin lesions using advanced deep learning models,
+      helping users gain early awareness and reliable guidance for better skin health.
+    </p>
+
+    <div class="features">
+      <div class="feat">
+        <h4>🔍 Accurate Detection</h4>
+        <p>Classifies common skin lesion types with confidence scores.</p>
+      </div>
+      <div class="feat">
+        <h4>🧾 Detailed Guidance</h4>
+        <p>Age-aware recommendations and next-steps for patients.</p>
+      </div>
+      <div class="feat">
+        <h4>📩 Feedback & Support</h4>
+        <p>Submit feedback to improve the model and research.</p>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <a class="btn primary" href="{{ url_for('detection') }}">Start Detection</a>
+      <a class="btn ghost" href="{{ url_for('insights') }}">Learn More</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

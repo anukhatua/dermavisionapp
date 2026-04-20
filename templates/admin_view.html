@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Admin - Feedback</h2>
+<div class="card">
+  {% if feedbacks %}
+    <table style="width:100%;border-collapse:collapse">
+      <thead><tr><th>Timestamp</th><th>Name</th><th>Email</th><th>Message</th></tr></thead>
+      <tbody>
+        {% for f in feedbacks %}
+          <tr>
+            <td>{{ f.timestamp }}</td>
+            <td>{{ f.name }}</td>
+            <td>{{ f.email }}</td>
+            <td>{{ f.message }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No feedback yet.</p>
+  {% endif %}
+</div>
+{% endblock %}
